@@ -67,7 +67,7 @@ const EventList = () => {
                 // eslint-disable-next-line react/no-array-index-key
                 <a key={n} href="#events" onClick={() => setCurrentPage(n + 1)}
                 style={{ 
-                  color: currentPage === (n + 1) ? 'white' : 'darkgrey'  // Condition pour changer la couleur en rouge si c'est la page active
+                  color: currentPage === (n + 1) ? 'white' : 'darkgrey'  // Condition pour changer la couleur si c'est la page active
                 }}
                 >
                   {n + 1}
