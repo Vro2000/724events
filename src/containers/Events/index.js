@@ -11,27 +11,30 @@ const PER_PAGE = 9;
 
 const EventList = () => {
   const { data, error } = useData();
-  const [type, setType] = useState();
+  const [type, setType] = useState(null); 
   const [currentPage, setCurrentPage] = useState(1);
-  const filteredEvents = (
-    (!type
-      ? data?.events
-      : data?.events) || []
-  ).filter((event, index) => {
+
+  if (!data || !data.events) {
+    return <div>Loading...</div>; // gére les erreurs si data est null ou undefined
+  }
+
+  const filteredEvents = data?.events.filter(event => !type || event.type === type).filter((event, index) => {
     if (
       (currentPage - 1) * PER_PAGE <= index &&
-      PER_PAGE * currentPage > index
+      index < currentPage * PER_PAGE
     ) {
       return true;
     }
     return false;
-  });
-  const changeType = (evtType) => {
-    setCurrentPage(1);
-    setType(evtType);
+});
+
+  const changeType = (newType) => {
+    setCurrentPage(1); // Réinitialise à la première page après un changement de type
+    setType(newType); // Met à jour le type sélectionné
   };
   const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
-  const typeList = new Set(data?.events.map((event) => event.type));
+  const typeList = new Set(data?.events.map(event => event.type));
+
   return (
     <>
       {error && <div>An error occured</div>}
@@ -60,12 +63,17 @@ const EventList = () => {
             ))}
           </div>
           <div className="Pagination">
-            {[...Array(pageNumber || 0)].map((_, n) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <a key={n} href="#events" onClick={() => setCurrentPage(n + 1)}>
-                {n + 1}
-              </a>
-            ))}
+            {[...Array(pageNumber || 0)].map((_, n) => [
+                // eslint-disable-next-line react/no-array-index-key
+                <a key={n} href="#events" onClick={() => setCurrentPage(n + 1)}
+                style={{ 
+                  color: currentPage === (n + 1) ? 'white' : 'darkgrey'  // Condition pour changer la couleur en rouge si c'est la page active
+                }}
+                >
+                  {n + 1}
+                </a>,
+                n < (pageNumber - 1) && ' - ' // Ajoute un tiret 
+            ])}
           </div>
         </>
       )}

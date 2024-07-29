@@ -11,6 +11,9 @@
     .EventCard__imageContainer {
       height: 126px;
       min-height: auto;
+      display: flex;
+      align-items: center; // Centrage vertical
+      justify-content: center; // Centrage horizontal
       overflow: hidden;
     }
     .EventCard__descriptionContainer {
@@ -23,7 +26,7 @@
       font-size: 8px;
     }
     .EventCard__label {
-      font-size: 8px;
+      font-size: 10px;
       width: 75px;
       height: 21px;
     }

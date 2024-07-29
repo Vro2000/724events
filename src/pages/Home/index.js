@@ -13,16 +13,16 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const {last} = useData()
+  const {last} = useData() // valeur de last est extraite pour être affichée dans eventCard
   return <>
     <header>
       <Menu />
     </header>
     <main>
-      <section className="SliderContainer">
+      <section id="top" className="SliderContainer">
         <Slider />
       </section>
-      <section className="ServicesContainer">
+      <section id="nos-services" className="ServicesContainer section-anchored">
         <h2 className="Title">Nos services</h2>
         <p>Nous organisons des événements sur mesure partout dans le monde</p>
         <div className="ListContainer">
@@ -51,11 +51,13 @@ const Page = () => {
           </ServiceCard>
         </div>
       </section>
-      <section className="EventsContainer">
+      
+      <section id="nos-realisations" className="EventsContainer section-anchored">
         <h2 className="Title">Nos réalisations</h2>
         <EventList />
       </section>
-      <section className="PeoplesContainer">
+
+      <section id="notre-equipe" className="PeoplesContainer section-anchored">
         <h2 className="Title">Notre équipe</h2>
         <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
         <div className="ListContainer">
@@ -91,7 +93,7 @@ const Page = () => {
           />
         </div>
       </section>
-      <div className="FormContainer" id="contact">
+      <div id="contact" className="FormContainer  section-anchored" >
         <h2 className="Title">Contact</h2>
         <Modal
           Content={
@@ -106,8 +108,8 @@ const Page = () => {
         >
           {({ setIsOpened }) => (
             <Form
-              onSuccess={() => setIsOpened(true)}
-              onError={() => null}
+              onSuccess={() => setIsOpened(true)} // Ouvrir le modal en cas de succès
+              onError={() => null} // Ne rien faire en cas d'erreur
             />
           )}
         </Modal>
@@ -116,13 +118,16 @@ const Page = () => {
     <footer className="row">
       <div className="col presta">
         <h3>Notre derniére prestation</h3>
-        <EventCard
-          imageSrc={last?.cover}
-          title={last?.title}
-          date={new Date(last?.date)}
-          small
-          label="boom"
-        />
+        
+        {last ? ( // Utilisation de last dans EventCard pour afficher les détails de l'événement le plus récent
+              <EventCard
+                imageSrc={last.cover}
+                title={last.title}
+                date={new Date(last.date)}
+                small
+                label="boom"
+                />
+              ) : null}
       </div>
       <div className="col contact">
         <h3>Contactez-nous</h3>
@@ -130,18 +135,18 @@ const Page = () => {
         <div>01 23 45 67 89</div>
         <div>contact@724events.com</div>
         <div>
-          <a href="#twitch">
-            <Icon name="twitch" />
-          </a>
-          <a href="#facebook">
-            <Icon name="facebook" />
-          </a>
-          <a href="#twitter">
-            <Icon name="twitter" />
-          </a>
-          <a href="#youtube">
-            <Icon name="youtube" />
-          </a>
+        <a href="https://www.twitch.tv" target="_blank" rel="noopener noreferrer" aria-label="Visitez notre Twitch">
+          <Icon name="twitch" />
+        </a>
+        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Visitez notre Facebook">
+          <Icon name="facebook" />
+        </a>
+        <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Visitez notre Twitter">
+          <Icon name="twitter" />
+        </a>
+        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" aria-label="Visitez notre YouTube">
+          <Icon name="youtube" />
+        </a>
         </div>
       </div>
       <div className="col description">

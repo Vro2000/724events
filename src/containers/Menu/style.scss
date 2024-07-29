@@ -1,7 +1,12 @@
 @import "src/colors.scss";
 
 header {
-  height: 112px;
+  height: 80px;
+  position: fixed; /* Fixe le header en haut de la page */
+  top: 0; 
+  width: 100%; 
+  z-index: 1000;
+  background-color: white; 
 }
 nav {
   font-family: "Manrope", sans-serif;
